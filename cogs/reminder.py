@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
 
-class MeetingReminder(commands.Cog):
+class reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.meetings = []  # Storing meeting details
