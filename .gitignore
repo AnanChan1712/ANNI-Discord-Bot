@@ -4,3 +4,6 @@
 .venv
 #ignore temp folder
 temp
+#ignore compiled bytecode files
+*.pyc
+__pycache__/
