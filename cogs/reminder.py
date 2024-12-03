@@ -1,7 +1,14 @@
 import discord
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
+import yaml
+import utils.helpers as helpers
+#object-oriented approach for Linux (utils.helpers) --> "as helpers" to easily mention 
 
+def load_config(file_path="link.yaml"):
+    with open(file_path, "r") as file:
+        return yaml.safe_load(file)
+    
 class reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -11,19 +18,26 @@ class reminder(commands.Cog):
         tokens = ctx.message.content.split()
         data =""
 
+#not sure of this line's purpose, possibly to acess the yaml file?
+        config_data = helpers.loadCache("link.yaml","reminder")
+        print("hi theretmlxwkxrer" + str(config_data))
+#file = txt document, directory=folder
+
         if len(tokens) == 1:
             data = "Usage: !meet [bt or l]\nOptions:\n  'bt' -> Brain Trust\n  'l' -> Leadership Meeting"
 
         elif len(tokens) == 2:
             if tokens[1] == "bt":
+                bt = config_data["bt"]
                 data = (
                     "@everyone Brain Trust starting now!\n"
-                    "Join here: https://us02web.zoom.us/j/88968536984?pwd=SGdwM1lFbmoraVE5eS9iR2NJNUJyUT09"
+                    f"Join here:{bt}"
                 )
             elif tokens[1] == "l":
+                l = config_data["l"]
                 data = (
-                    "@everyone Leadership Meeting starting now!\n"
-                    "Join here: link loading..."
+                    "@everyone Brain Trust starting now!\n"
+                    f"Join here:{l}"
                 )
             else:
                 data = "Unknown meeting type. Use 'bt' or 'l'."
@@ -33,6 +47,7 @@ class reminder(commands.Cog):
             data = "Too many arguments. Usage: !meet [bt or l]"
 
         await ctx.send(data)
+        #ctx = a class that has access to all the server's discord data (guild)
 
         #formatted reminder:
         #message = (
